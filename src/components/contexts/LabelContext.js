@@ -1,10 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const LabelContext = createContext();
 
-const LabelProvider = ({ childern }) => {
-  cosnt[(labels, setLabels)] = useState([]);
-
+export const LabelProvider = ({ childern }) => {
+  const [labels, setLabels] = useState([]);
   const fetchLabels = () => {
     // make get request to "http://localhost:5000/api/v1/labels"
     // and update the labels state
@@ -26,3 +25,5 @@ const LabelProvider = ({ childern }) => {
     </LabelContext.Provider>
   );
 };
+
+export const useLabel = () => useContext(LabelContext);

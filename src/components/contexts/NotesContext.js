@@ -1,4 +1,5 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
+import PropTypes from "prop-types";
 
 export const NotesContext = createContext();
 
@@ -69,5 +70,8 @@ export const NotesProvider = ({ children }) => {
       {children}
     </NotesContext.Provider>
   );
+};
+NotesProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 export const useNotes = () => useContext(NotesContext);
