@@ -1,24 +1,36 @@
 import { createContext, useState, useContext, useEffect } from "react";
 
-// Create the context
 export const AuthContext = createContext();
 
-// Provider component
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({});
 
-  const login = ({ email, password }) => {
-    // make a post request to "http://localhost:5000/api/v1/users/login"
-    // if login is successfull set isAuthenticated and user state
-    // else show error
+  const login = async ({ email, password }) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/users/login",
+      { email, password }
+    );
+    return response.data;
   };
-  const logout = () => {
-    // make post request to "http://localhost:5000/api/v1/users/logout"
+  const logout = async () => {
+    const response = await axios.post(
+      "http://localhost:5000/api/v1/users/logout"
+    );
+    return response.data;
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        user,
+        login,
+        logout,
+        setIsAuthenticated,
+        setUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
