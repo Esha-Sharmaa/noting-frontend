@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .sidebar-icon {
+        @apply relative flex items-center justify-center h-14 w-14 m-4 p-[14px] cursor-pointer border-dividerColor border-2 rounded-xl hover:bg-accentPurple hover:rounded-full transition-all duration-300 ease-linear font-sans;
+    }
+
+    .sidebar-tooltip {
+        @apply absolute left-16 border-2 p-2 border-highlightColor rounded-xl shadow-sm text-sm font-bold transition-all duration-0 scale-0 origin-left font-sans;
+    }
+
+    .landing-heading {
+        @apply inline-block text-[2.5rem] md:text-6xl bg-gradient-to-r bg-clip-text text-transparent font-sans;
+        background-image: linear-gradient(to right, #FFFFFF, #F5C3FE, #EA80FC, #EA80FC);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+}
+
+* {
+    font-family: "Capriola", sans-serif;
+}
+
+body {
+    background-color: #303236 !important;
+    color: #FFFFFF !important;
+    color: #f8cfe4;
+}

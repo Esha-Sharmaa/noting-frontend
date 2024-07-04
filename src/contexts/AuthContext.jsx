@@ -1,5 +1,5 @@
-import { createContext, useState, useContext } from "react";
-import axios from "axios";
+import { createContext, useState } from "react";
+import axios from "../utlis/axiosConfig";
 import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
@@ -9,16 +9,14 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
   const login = async ({ email, password }) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/users/login",
-      { email, password }
-    );
+    const response = await axios.post("/api/v1/users/login", {
+      email,
+      password,
+    });
     return response.data;
   };
   const logout = async () => {
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/users/logout"
-    );
+    const response = await axios.post("/api/v1/users/logout");
     return response.data;
   };
 
@@ -40,4 +38,3 @@ export const AuthProvider = ({ children }) => {
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-export const useAuth = () => useContext(AuthContext);
