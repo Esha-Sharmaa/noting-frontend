@@ -1,3 +1,4 @@
 import { useContext } from "react";
 import { NotesContext } from "../contexts/NotesContext";
-export const useNotes = () => useContext(NotesContext);
+const useNotes = () => useContext(NotesContext);
+export default useNotes;

@@ -4,7 +4,7 @@
 
 @layer components {
     .sidebar-icon {
-        @apply relative flex items-center justify-center h-14 w-14 m-4 p-[14px] cursor-pointer border-dividerColor border-2 rounded-xl hover:bg-accentPurple hover:rounded-full transition-all duration-300 ease-linear font-sans;
+        @apply relative flex items-center justify-center h-12 md:h-14 w-12 md:w-14 m-4 p-[14px] cursor-pointer border-dividerColor border-2 rounded-xl hover:bg-accentPurple hover:rounded-full transition-all duration-300 ease-linear font-sans;
     }
 
     .sidebar-tooltip {

@@ -1,14 +1,16 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
+import axios from "../utlis/axiosConfig";
 
 export const NotesContext = createContext();
 
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
 
-  const fetchNotes = () => {
-    // make a get request to "http://localhost:5000/api/v1/notes"
-    // store all the notes in the notes State
+  const fetchNotes = async () => {
+    const response = await axios.get("/api/v1/notes");
+    console.log(response.data);
+    return response.data;
   };
   const addNote = ({ title, type, content, image, listItems }) => {
     // make a post request to "http://localhost:5000/api/v1/notes/add"
@@ -59,6 +61,7 @@ export const NotesProvider = ({ children }) => {
       value={{
         notes,
         addNote,
+        setNotes,
         deleteNote,
         fetchNotes,
         addCollaborator,

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { NotesProvider } from "./contexts/NotesContext.jsx";
 
 const queryClient = new QueryClient();
 
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <ChakraProvider>
         <Router>
           <AuthProvider>
-            <App />
+            <NotesProvider>
+              <App />
+            </NotesProvider>
           </AuthProvider>
         </Router>
       </ChakraProvider>
