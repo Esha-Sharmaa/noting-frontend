@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Capriola", "sans-serif"],
+        sans: ["Poppins", "sans-serif"],
         bungee: ['"Bungee Inline"', "cursive"],
       },
       colors: {
