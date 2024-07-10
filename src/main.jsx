@@ -17,6 +17,7 @@ import TrashList from "./components/Trash/TrashList";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import HomePage from "./Pages/HomePage.jsx";
 import NotFoundPage from "./components/Common/404.jsx";
+import SharedNoteList from "./components/Collaborators/SharedNoteList.jsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
               {
                 path: "trash",
                 element: <TrashList />,
+              },
+              {
+                path: "collaborators",
+                element: <SharedNoteList />,
               },
             ],
           },
