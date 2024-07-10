@@ -17,7 +17,14 @@ const SharedNoteList = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 md:p-10">
-        <SharedNoteCard notes={sharedList} />
+        {sharedList.map((item) => (
+          <SharedNoteCard
+            key={item.note._id}
+            note={item.note}
+            permission={item.permission}
+            
+          />
+        ))}
       </div>
     </>
   );
