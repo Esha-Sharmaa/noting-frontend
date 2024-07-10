@@ -75,6 +75,12 @@ export const NotesProvider = ({ children }) => {
     const response = await axios.get(`/api/v1/notes/unarchive/${id}`);
     return response.data;
   };
+  const editNote = async (id, data) => {
+    console.log(id, data);
+    
+    const response = await axios.put(`/api/v1/notes/edit/${id}`, data);
+    return response.data;
+  };
   return (
     <NotesContext.Provider
       value={{
@@ -92,6 +98,7 @@ export const NotesProvider = ({ children }) => {
         restoreNote,
         unarchiveNote,
         fetchSharedNotes,
+        editNote,
       }}
     >
       {children}

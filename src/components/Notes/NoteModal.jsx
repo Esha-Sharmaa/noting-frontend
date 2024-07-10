@@ -10,10 +10,19 @@ import {
   Input,
   Button,
   Textarea,
+  Box,
+  Image,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import NoteImage from "./NoteImage";
-const NoteModal = ({ isOpen, onClose, editableContent, handleChange }) => {
+
+const NoteModal = ({
+  type,
+  isOpen,
+  onClose,
+  editableContent,
+  handleChange,
+  handleSubmit,
+}) => {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -22,14 +31,14 @@ const NoteModal = ({ isOpen, onClose, editableContent, handleChange }) => {
           <ModalHeader>Edit Your Note</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
+            <FormControl mb={6}>
               <Input
                 placeholder="Title"
                 value={editableContent.title}
                 onChange={(e) => handleChange("title", e.target.value)}
               />
             </FormControl>
-            {editableContent.content && (
+            {type === "text" && (
               <FormControl>
                 <Textarea
                   placeholder="Content"
@@ -38,13 +47,47 @@ const NoteModal = ({ isOpen, onClose, editableContent, handleChange }) => {
                 />
               </FormControl>
             )}
-            {editableContent.imageUrl && (
-              <NoteImage imageUrl={editableContent.imageUrl} />
+            {type === "image" && (
+              <FormControl>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  mt={3}
+                  focusBorderColor="#ea80fc"
+                  _hover={{ borderColor: "#ea80fc" }}
+                  _active={{ borderColor: "#ea80fc" }}
+                  color="white"
+                  borderColor="#ea80fc"
+                  onChange={(e) => handleChange("imageUrl", e.target.files[0])}
+                />
+                <Box
+                  border={"solid"}
+                  color="white"
+                  p={2}
+                  mt={2}
+                  borderRadius="md"
+                  borderColor={"#ea80fc"}
+                  textAlign="center"
+                >
+                  {editableContent.imageUrl ? (
+                    <Image
+                      boxSize="100px"
+                      objectFit="contain"
+                      src={editableContent.imageUrl}
+                      alt="Image Note"
+                    />
+                  ) : (
+                    "Selected Image Preview"
+                  )}
+                </Box>
+              </FormControl>
             )}
-            {editableContent.listItems &&
-              editableContent.listItems.map((item) => (
-                <li key={item}> {item}</li>
-              ))}
+            {type === "list" && (
+              <Textarea
+                value={editableContent.listItems.join(", ")}
+                onChange={(e) => handleChange("listItems", e.target.value)}
+              ></Textarea>
+            )}
           </ModalBody>
           <ModalFooter>
             <Button
@@ -52,6 +95,7 @@ const NoteModal = ({ isOpen, onClose, editableContent, handleChange }) => {
               color="white"
               mr={3}
               _hover={{ bg: "#ba65c9" }}
+              onClick={handleSubmit}
             >
               Save
             </Button>
@@ -75,6 +119,8 @@ NoteModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   editableContent: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default NoteModal;

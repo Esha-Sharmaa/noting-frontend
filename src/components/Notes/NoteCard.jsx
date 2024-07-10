@@ -12,6 +12,7 @@ import useToastNotification from "../../hooks/useToastNotification";
 import AddCollaboratorModal from "../Collaborators/AddCollaboratorModal";
 import ShowCollaboratorModal from "../Collaborators/ShowCollaboratorModal";
 const NoteCard = ({
+  type,
   title,
   id,
   content,
@@ -59,9 +60,28 @@ const NoteCard = ({
     deleteNote,
     deleteCollaborator,
     addCollaborator,
+    editNote,
   } = useNotes();
   const queryClient = useQueryClient();
   // mutation functions
+  const editNoteMutation = useMutation({
+    mutationFn: (formData) => editNote(formData.get("id"), formData),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["notes"]);
+      showSuccessToast({
+        title: "SUCCESS",
+        description: "Note Edited Successfully",
+      });
+      onNoteModalClose();
+    },
+    onError: (error) => {
+      console.log("Error in editing", error);
+      showErrorToast({
+        title: "ERROR",
+        description: error.response.data.message,
+      });
+    },
+  });
   const archiveMutation = useMutation({
     mutationFn: archiveNote,
     onSuccess: () => {
@@ -71,10 +91,10 @@ const NoteCard = ({
         description: "Note Archived Successfully",
       });
     },
-    onError: () => {
+    onError: (error) => {
       showErrorToast({
         title: "ERROR",
-        description: "ERROR Archiving note ",
+        description: error.response.data.message,
       });
     },
   });
@@ -87,10 +107,10 @@ const NoteCard = ({
         description: "Note Trashed Successfully",
       });
     },
-    onError: () => {
+    onError: (error) => {
       showErrorToast({
         title: "ERROR",
-        description: "ERROR Trashing note ",
+        description: error.response.data.message,
       });
     },
   });
@@ -103,10 +123,10 @@ const NoteCard = ({
         description: "Note Unarchived Successfully",
       });
     },
-    onError: () => {
+    onError: (error) => {
       showErrorToast({
         title: "ERROR",
-        description: "ERROR unarchiving note ",
+        description: error.response.data.message,
       });
     },
   });
@@ -180,10 +200,21 @@ const NoteCard = ({
   });
   // handle functions
   const handleChange = (field, value) => {
+    if (field === "listItems") value = value.split(",");
     setEditableContent((prev) => ({
       ...prev,
       [field]: value,
     }));
+  };
+  const handleSubmit = () => {
+    const formData = new FormData();
+    console.log(editableContent);
+    formData.append("id", id);
+    formData.append("type", type);
+    formData.append("title", editableContent.title);
+    formData.append("noteImage", editableContent.imageUrl);
+    formData.append("listItems", JSON.stringify(editableContent.listItems));
+    editNoteMutation.mutate(formData);
   };
   const handelAddArchive = () => {
     archiveMutation.mutate(id);
@@ -237,6 +268,8 @@ const NoteCard = ({
           onClose={onNoteModalClose}
           editableContent={editableContent}
           handleChange={handleChange}
+          type={type}
+          handleSubmit={handleSubmit}
         />
         <AddCollaboratorModal
           noteId={id}
@@ -275,5 +308,6 @@ NoteCard.propTypes = {
   id: PropTypes.string.isRequired,
   isArchived: PropTypes.bool.isRequired,
   isTrashed: PropTypes.bool.isRequired,
+  type: PropTypes.string.isRequired,
 };
 export default NoteCard;
