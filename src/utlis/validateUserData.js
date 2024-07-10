@@ -1,6 +1,5 @@
 const validateUserData = ({ fullName, password, email }, isLoginForm) => {
   let errors = {};
-  console.log(fullName, password, email);
   if (!isLoginForm && !fullName) {
     console.log(fullName.length, isLoginForm);
     errors.fullName = "Full Name is required";

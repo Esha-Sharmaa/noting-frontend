@@ -71,7 +71,7 @@ const NoteModal = ({ isOpen, onClose, editableContent, handleChange }) => {
 };
 
 NoteModal.propTypes = {
-  isOpen: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   editableContent: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,

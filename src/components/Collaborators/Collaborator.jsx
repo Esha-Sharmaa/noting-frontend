@@ -1,9 +1,15 @@
 import { Avatar, AvatarGroup } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-const Collaborators = ({ collaborators }) => {
+
+const Collaborators = ({ collaborators, onShowCollabModalOpen }) => {
   return (
     <div className="mb-2">
-      <AvatarGroup size="xs" max={2}>
+      <AvatarGroup
+        size="xs"
+        max={2}
+        onClick={onShowCollabModalOpen}
+        cursor={"pointer"}
+      >
         {collaborators.map((coll) => (
           <Avatar
             size={"xs"}
@@ -18,5 +24,6 @@ const Collaborators = ({ collaborators }) => {
 };
 Collaborators.propTypes = {
   collaborators: PropTypes.array.isRequired,
+  onShowCollabModalOpen: PropTypes.func.isRequired,
 };
 export default Collaborators;

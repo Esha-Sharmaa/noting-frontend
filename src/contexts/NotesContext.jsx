@@ -8,53 +8,68 @@ export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
 
   const fetchNotes = async () => {
-    const response = await axios.get("/api/v1/notes");
-    console.log(response.data);
+    try {
+      const response = await axios.get("/api/v1/notes");
+      setNotes(response.data.data);
+
+      return response.data;
+    } catch (error) {
+      console.log("Error fetching notes");
+      throw error;
+    }
+  };
+  const addNote = async (data) => {
+    console.log(data);
+    const response = await axios.post("/api/v1/notes/add", data);
     return response.data;
   };
-  const addNote = ({ title, type, content, image, listItems }) => {
-    // make a post request to "http://localhost:5000/api/v1/notes/add"
-    // and re-fetch the notes data to update the notes state
+  const deleteNote = async (id) => {
+    const response = await axios.delete(`/api/v1/notes/delete/${id}`);
+    console.log(response);
+    return response.data;
   };
-  const deleteNote = ({ id }) => {
-    // make a delete request to "http://localhost:5000/api/v1/notes/delete/id"
-    // and re-fetch the notes data
+  const addCollaborator = async ({ email, noteId, permission }) => {
+    const response = await axios.post("/api/v1/collaborators/add", {
+      email,
+      noteId,
+      permission,
+    });
+    return response.data;
   };
-  const addCollaborator = ({ email, noteId, permission }) => {
-    // make a post request to http://localhost:5000/api/v1/collaborators/add
-    // data send format
-    /* {
-    "email":"muskantiwari@gmail.com",
-    "noteId":"668433d3c1cc93c9a924e4c6",
-    "permission":"read"
-*/
-    // update the notes state (again refetch)
+  const deleteCollaborator = async (id) => {
+    const response = await axios.delete(`/api/v1/collaborators/delete/${id}`);
+    return response.data;
   };
-  const deleteCollaborator = ({ id }) => {
-    /* make delete request http://localhost:5000/api/v1/collaborators/delete/id 
-        again re-fetch the notes data to update the state
-        */
+  const addLabelToNote = async ({ labelId, noteId }) => {
+    const response = await axios.put("/api/v1/notes/labels/add", {
+      labelId,
+      noteId,
+    });
+    return response.data;
   };
-
-  const addLabelToNote = ({ labelId, noteId }) => {
-    /* 
-      make put request to "http://localhost:5000/api/v1/notes/labels/add"
-      data sent {
-    "labelId":"6683f544e19f6411a49d22a6",
-    "noteId":"668433d3c1cc93c9a924e4c6"
-    refetch the notes data to update the state
-}
-       */
+  const deleteLabelFromNote = async ({ labelId, noteId }) => {
+    const response = await axios.delete(
+      `/api/v1/notes/labels/delete/${labelId}/${noteId}`
+    );
+    return response.data;
   };
-  const deleteLabelFromNote = ({ labelId, noteId }) => {
-    /* 
-      make delete request to "http://localhost:5000/api/v1/notes/labels/delete"
-      data sent     {
-    "labelId":"6683f544e19f6411a49d22a6",
-    "noteId":"6683f35a435358daab029ea3"
-}
-    refetch the notes data to update
-      */
+  const archiveNote = async (id) => {
+    const response = await axios.get(`/api/v1/notes/archive/${id}`);
+    console.log("Response after archiving", response.data);
+    return response.data;
+  };
+  const trashNote = async (id) => {
+    const response = await axios.get(`/api/v1/notes/trash/${id}`);
+    console.log("response after trashing the data", response.data);
+    return response.data;
+  };
+  const restoreNote = async (id) => {
+    const response = await axios.get(`/api/v1/notes/restore-trash/${id}`);
+    return response.data;
+  };
+  const unarchiveNote = async (id) => {
+    const response = await axios.get(`/api/v1/notes/unarchive/${id}`);
+    return response.data;
   };
   return (
     <NotesContext.Provider
@@ -68,6 +83,10 @@ export const NotesProvider = ({ children }) => {
         addLabelToNote,
         deleteCollaborator,
         deleteLabelFromNote,
+        archiveNote,
+        trashNote,
+        restoreNote,
+        unarchiveNote,
       }}
     >
       {children}

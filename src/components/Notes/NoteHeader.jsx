@@ -6,8 +6,8 @@ const NoteHeader = ({ title, updatedAt }) => {
   return (
     <>
       <div className="border-b-2 border-gray-500 my-3 pb-2">
-        <h1 className="text-[1.6rem] font-bold "> {title} </h1>
-        <span className="text-[12px] mb-2 text-gray-400">
+        <h1 className="text-lg md:text-[1.47rem] font-bold "> {title} </h1>
+        <span className="text-[10px] md:text-[12px] mb-2 text-gray-400">
           {`Last Updated At: ${formattedDate}`}
         </span>
       </div>
