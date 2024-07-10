@@ -23,6 +23,10 @@ export const NotesProvider = ({ children }) => {
     const response = await axios.post("/api/v1/notes/add", data);
     return response.data;
   };
+  const fetchSharedNotes = async () => {
+    const response = await axios.get("/api/v1/notes/collab");
+    return response.data.data;
+  };
   const deleteNote = async (id) => {
     const response = await axios.delete(`/api/v1/notes/delete/${id}`);
     console.log(response);
@@ -87,6 +91,7 @@ export const NotesProvider = ({ children }) => {
         trashNote,
         restoreNote,
         unarchiveNote,
+        fetchSharedNotes,
       }}
     >
       {children}

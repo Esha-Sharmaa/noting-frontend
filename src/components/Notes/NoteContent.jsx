@@ -42,6 +42,6 @@ NoteContent.propTypes = {
   imageUrl: PropTypes.string,
   labels: PropTypes.array,
   id: PropTypes.string.isRequired,
-  onShowCollabModalOpen: PropTypes.func.isRequired,
+  onShowCollabModalOpen: PropTypes.func,
 };
 export default NoteContent;
