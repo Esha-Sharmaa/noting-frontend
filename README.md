@@ -1,7 +1,3 @@
-Sure, here's a comprehensive README for the frontend of your Noting application:
-
----
-
 # Noting Application Frontend
 
 This is the frontend repository for the Noting application, inspired by Google Keep. The application is built using React, Vite, Chakra UI, and RTK Query. It allows users to create, edit, delete, and manage notes with various features such as labels, collaborators, and more.
