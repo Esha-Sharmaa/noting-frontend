@@ -28,6 +28,7 @@ const NotesList = () => {
         <NoteCard
           key={note._id}
           id={note._id}
+          type={note.type}
           title={note.title}
           content={note.content}
           imageUrl={note.imageUrl}
