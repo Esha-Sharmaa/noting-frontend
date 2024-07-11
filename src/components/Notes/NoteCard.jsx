@@ -212,6 +212,7 @@ const NoteCard = ({
     formData.append("id", id);
     formData.append("type", type);
     formData.append("title", editableContent.title);
+    formData.append("content", editableContent.content);
     formData.append("noteImage", editableContent.imageUrl);
     formData.append("listItems", JSON.stringify(editableContent.listItems));
     editNoteMutation.mutate(formData);
