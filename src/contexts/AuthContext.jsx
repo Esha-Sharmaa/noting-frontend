@@ -16,10 +16,45 @@ export const AuthProvider = ({ children }) => {
     return response.data;
   };
   const logout = async () => {
-    const response = await axios.post("/api/v1/users/logout");
-    return response.data;
+    try {
+      const response = await axios.post("/api/v1/users/logout");
+      return response.data;
+    } catch (error) {
+      console.log("Error logging out");
+      throw error;
+    }
   };
 
+  const changeAvatar = async (formData) => {
+    try {
+      const response = await axios.put("/api/v1/users/changeAvatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setUser((prevUser) => ({
+        ...prevUser,
+        avatar: response.data.data.avatar,
+      }));
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+      throw error;
+    }
+  };
+  const deleteAvatar = async () => {
+    try {
+      const response = await axios.put("/api/v1/users/deleteAvatar");
+      setUser((prevUser) => ({
+        ...prevUser,
+        avatar: null,
+      }));
+      return response.data;
+    } catch (error) {
+      console.error("Error deleting avatar:", error);
+      throw error;
+    }
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -29,6 +64,8 @@ export const AuthProvider = ({ children }) => {
         logout,
         setIsAuthenticated,
         setUser,
+        changeAvatar,
+        deleteAvatar,
       }}
     >
       {children}

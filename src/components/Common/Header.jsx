@@ -12,12 +12,15 @@ import {
   MenuDivider,
   Button,
   Box,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
+import AvatarUploadModal from "./AvatarUploadModal";
 
 const Header = () => {
   const { user, logout } = useAuth();
   const { showErrorToast } = useToastNotification();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
@@ -69,11 +72,21 @@ const Header = () => {
               <small>{user.email}</small>
             </Box>
             <MenuDivider />
+            <MenuItem onClick={onOpen} bg={"#303236"}>
+              Change Avatar
+            </MenuItem>
+            <MenuDivider />
+
             <MenuItem onClick={handleLogout} bg={"#303236"}>
               Logout
             </MenuItem>
           </MenuList>
         </Menu>
+        <AvatarUploadModal
+          isOpen={isOpen}
+          onClose={onClose}
+          currentAvatar={user?.avatar}
+        />
       </div>
     </div>
   );
