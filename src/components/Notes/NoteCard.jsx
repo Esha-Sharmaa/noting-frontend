@@ -309,5 +309,8 @@ NoteCard.propTypes = {
   isArchived: PropTypes.bool.isRequired,
   isTrashed: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
+  isPinned: PropTypes.bool.isRequired, // New prop
+  onPin: PropTypes.func.isRequired, // New prop
+  onUnpin: PropTypes.func.isRequired, // New prop
 };
 export default NoteCard;

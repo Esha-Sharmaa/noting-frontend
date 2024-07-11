@@ -58,29 +58,38 @@ export const NotesProvider = ({ children }) => {
     return response.data;
   };
   const archiveNote = async (id) => {
-    const response = await axios.get(`/api/v1/notes/archive/${id}`);
+    const response = await axios.put(`/api/v1/notes/archive/${id}`);
     console.log("Response after archiving", response.data);
     return response.data;
   };
   const trashNote = async (id) => {
-    const response = await axios.get(`/api/v1/notes/trash/${id}`);
+    const response = await axios.put(`/api/v1/notes/trash/${id}`);
     console.log("response after trashing the data", response.data);
     return response.data;
   };
   const restoreNote = async (id) => {
-    const response = await axios.get(`/api/v1/notes/restore-trash/${id}`);
+    const response = await axios.put(`/api/v1/notes/restore-trash/${id}`);
     return response.data;
   };
   const unarchiveNote = async (id) => {
-    const response = await axios.get(`/api/v1/notes/unarchive/${id}`);
+    const response = await axios.put(`/api/v1/notes/unarchive/${id}`);
+    return response.data;
+  };
+  const pinNote = async (id) => {
+    const response = await axios.put(`/api/v1/notes/pin-note/${id}`);
+    return response.data;
+  };
+  const unpinNote = async (id) => {
+    const response = await axios.put(`/api/v1/notes/unpin-note/${id}`);
     return response.data;
   };
   const editNote = async (id, data) => {
     console.log(id, data);
-    
+
     const response = await axios.put(`/api/v1/notes/edit/${id}`, data);
     return response.data;
   };
+
   return (
     <NotesContext.Provider
       value={{
@@ -99,6 +108,8 @@ export const NotesProvider = ({ children }) => {
         unarchiveNote,
         fetchSharedNotes,
         editNote,
+        pinNote,
+        unpinNote,
       }}
     >
       {children}
