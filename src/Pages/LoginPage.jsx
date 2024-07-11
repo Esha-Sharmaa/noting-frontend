@@ -11,9 +11,20 @@ import { useMutation } from "@tanstack/react-query";
 const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [validationErrors, setValidationErrors] = useState({});
-  const { isAuthenticated, login, setIsAuthenticated, setUser } = useAuth();
+  const [registrationSuccess, setRegistrationSuccess] = useState("");
+  const {
+    isAuthenticated,
+    login,
+    setIsAuthenticated,
+    setUser,
+    registerUser,
+  } = useAuth();
 
-  const { mutate: loginMutation, isError, error } = useMutation({
+  const {
+    mutate: loginMutation,
+    isError: loginError,
+    error: loginErrorDetails,
+  } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
       setIsAuthenticated(true);
@@ -25,6 +36,23 @@ const Login = () => {
       console.log("Error from onError", error.response.data.message);
     },
   });
+
+  const {
+    mutate: registerMutation,
+    isError: registerError,
+    error: registerErrorDetails,
+  } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      setRegistrationSuccess("Registration successful! Please log in.");
+      setIsLoginForm(true);
+      setFormState({ fullName: "", email: "", password: "" });
+    },
+    onError: (error) => {
+      console.log("Error from onError", error.response.data.message);
+    },
+  });
+
   const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
@@ -32,12 +60,14 @@ const Login = () => {
     email: "",
     password: "",
   });
+
   const handleLoginFormToggle = (e) => {
     e.preventDefault();
     setIsLoginForm(!isLoginForm);
-    setFormState({ name: "", email: "", password: "" });
+    setFormState({ fullName: "", email: "", password: "" });
     setValidationErrors({});
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormState({
@@ -45,6 +75,7 @@ const Login = () => {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValidationErrors({});
@@ -54,27 +85,41 @@ const Login = () => {
       setValidationErrors(errors);
       return;
     }
-    loginMutation({ email: formState.email, password: formState.password });
+    if (isLoginForm) {
+      loginMutation({ email: formState.email, password: formState.password });
+    } else {
+      registerMutation(formState);
+    }
   };
+
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/home", { replace: true });
     }
   }, [isAuthenticated, navigate]);
+
   if (isAuthenticated) {
     return null;
   }
+
   return (
-    <div className="flex justify-center items-center  bg-gradient-to-b from-[#303236] to-[#606060] h-screen">
+    <div className="flex justify-center items-center bg-gradient-to-b from-[#303236] to-[#606060] h-screen">
       <div className="w-[90%] md:w-[50%] bg-[#333539] pt-16 pb-16 flex flex-col items-center rounded-3xl">
         <LoginHeader />
-        {isError && (
+        {(loginError || registerError) && (
           <p
-            className={`text-[#ef6868] text-sm border-2 border-[#ef6868] pl-4 pr-4 mt-4 pt-1 pb-1 rounded ${
-              isError ? "" : "invisible"
-            }`}
+            className={`text-[#ef6868] text-sm border-2 border-[#ef6868] pl-4 pr-4 mt-4 pt-1 pb-1 rounded`}
           >
-            {error.response.data.message}
+            {loginError
+              ? loginErrorDetails.response.data.message
+              : registerErrorDetails.response.data.message}
+          </p>
+        )}
+        {registrationSuccess && (
+          <p
+            className={`text-[#68ef68] text-sm border-2 border-[#68ef68] pl-4 pr-4 mt-4 pt-1 pb-1 rounded`}
+          >
+            {registrationSuccess}
           </p>
         )}
         <form

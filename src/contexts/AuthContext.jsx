@@ -24,6 +24,14 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+  const registerUser = async ({ fullName, email, password }) => {
+    const response = await axios.post("/api/v1/users/register", {
+      fullName,
+      email,
+      password,
+    });
+    return response.data;
+  };
 
   const changeAvatar = async (formData) => {
     try {
@@ -66,6 +74,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         changeAvatar,
         deleteAvatar,
+        registerUser,
       }}
     >
       {children}
