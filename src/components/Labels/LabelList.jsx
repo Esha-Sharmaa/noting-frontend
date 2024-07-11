@@ -11,7 +11,6 @@ import {
   Text,
   IconButton,
   VStack,
-  Heading,
   Divider,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
@@ -23,7 +22,7 @@ import { format } from "date-fns";
 const LabelList = () => {
   const [newLabel, setNewLabel] = useState("");
   const { fetchLabels, addLabel, deleteLabel } = useLabel();
-  const { data: labels, isLoading, isError, error } = useQuery({
+  const { data: labels, isLoading, isError } = useQuery({
     queryKey: ["labels"],
     queryFn: fetchLabels,
   });
@@ -61,7 +60,7 @@ const LabelList = () => {
       });
     },
   });
-  const handleAddLabel = (id) => {
+  const handleAddLabel = () => {
     addLabelMutation.mutate({ name: newLabel });
   };
 
