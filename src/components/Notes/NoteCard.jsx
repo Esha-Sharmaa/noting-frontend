@@ -216,6 +216,7 @@ const NoteCard = ({
     formData.append("noteImage", editableContent.imageUrl);
     formData.append("listItems", JSON.stringify(editableContent.listItems));
     editNoteMutation.mutate(formData);
+    onNoteModalClose();
   };
   const handelAddArchive = () => {
     archiveMutation.mutate(id);
@@ -237,6 +238,7 @@ const NoteCard = ({
   };
   const handleAddCollab = ({ email, noteId, permission }) => {
     addCollabratorMutation.mutate({ email, noteId, permission });
+    onShowCollabModalClose();
   };
   return (
     <>
