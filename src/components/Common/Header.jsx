@@ -1,5 +1,5 @@
 import { FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/png/Color logo - no background.png";
 import useAuth from "../../hooks/useAuth";
 import useToastNotification from "../../hooks/useToastNotification";
@@ -18,6 +18,7 @@ import { useMutation } from "@tanstack/react-query";
 import AvatarUploadModal from "./AvatarUploadModal";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { showErrorToast } = useToastNotification();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,6 +27,7 @@ const Header = () => {
     onSuccess: () => {
       localStorage.removeItem("isAuthenticated");
       localStorage.removeItem("user");
+      navigate("/");
     },
     onError: (error) => {
       showErrorToast({

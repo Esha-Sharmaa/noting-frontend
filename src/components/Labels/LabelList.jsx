@@ -124,6 +124,7 @@ const LabelList = () => {
                 borderRadius="md"
                 boxShadow="md"
                 _hover={{ bg: itemHoverBgColor }}
+                
               >
                 <Box>
                   <Text fontWeight="bold" fontSize="md">

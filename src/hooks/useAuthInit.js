@@ -15,8 +15,6 @@ const useAuthInit = () => {
       if (user) {
         setIsAuthenticated(true);
         setUser(user);
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("user", JSON.stringify(user));
       } else {
         navigate("/login");
       }

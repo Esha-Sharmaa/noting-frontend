@@ -1,11 +1,12 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
-import axios from "../utlis/axiosConfig";
+import useAxios from "../hooks/useAxios";
 
 export const NotesContext = createContext();
 
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
+  const axios = useAxios();
 
   const fetchNotes = async () => {
     try {

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import axios from "../utlis/axiosConfig";
+import useAxios from "../hooks/useAxios";
 import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
@@ -7,11 +7,18 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({});
+  const axios = useAxios();
 
   const login = async ({ email, password }) => {
     const response = await axios.post("/api/v1/users/login", {
       email,
       password,
+    });
+    return response.data;
+  };
+  const googleLogin = async (accessToken) => {
+    const response = await axios.post("/api/v1/users/login", {
+      googleAccessToken: accessToken,
     });
     return response.data;
   };
@@ -75,6 +82,7 @@ export const AuthProvider = ({ children }) => {
         changeAvatar,
         deleteAvatar,
         registerUser,
+        googleLogin,
       }}
     >
       {children}

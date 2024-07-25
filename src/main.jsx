@@ -19,6 +19,7 @@ import HomePage from "./Pages/HomePage.jsx";
 import NotFoundPage from "./components/Common/404.jsx";
 import SharedNoteList from "./components/Collaborators/SharedNoteList.jsx";
 import LabelList from "./components/Labels/LabelList.jsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -74,19 +75,21 @@ const router = createBrowserRouter([
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <QueryClientProvider client={queryClient}>
-    <React.StrictMode>
-      <ChakraProvider>
-        <AuthProvider>
-          <NotesProvider>
-            <LabelProvider>
-              <RouterProvider router={router}>
-                <App />
-              </RouterProvider>
-            </LabelProvider>
-          </NotesProvider>
-        </AuthProvider>
-      </ChakraProvider>
-    </React.StrictMode>
-  </QueryClientProvider>
+  <GoogleOAuthProvider clientId="921008571578-vdpch0vmidp04f28g5b3k0kl0c4n26p9.apps.googleusercontent.com">
+    <QueryClientProvider client={queryClient}>
+      <React.StrictMode>
+        <ChakraProvider>
+          <AuthProvider>
+            <NotesProvider>
+              <LabelProvider>
+                <RouterProvider router={router}>
+                  <App />
+                </RouterProvider>
+              </LabelProvider>
+            </NotesProvider>
+          </AuthProvider>
+        </ChakraProvider>
+      </React.StrictMode>
+    </QueryClientProvider>
+  </GoogleOAuthProvider>
 );

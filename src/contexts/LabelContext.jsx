@@ -1,4 +1,4 @@
-import axios from "../utlis/axiosConfig";
+import useAxios from "../hooks/useAxios";
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
 
@@ -6,6 +6,7 @@ export const LabelContext = createContext();
 
 export const LabelProvider = ({ children }) => {
   const [labels, setLabels] = useState([]);
+  const axios = useAxios();
   const fetchLabels = async () => {
     const response = await axios.get("/api/v1/labels");
     setLabels(response.data.data);

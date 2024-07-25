@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import validateUserData from "../utlis/validateUserData.js";
 import Input from "../components/Login/Input.jsx";
 import LoginHeader from "../components/Login/LoginHeader.jsx";
-import GoogleBtn from "../components/Login/GoogleBtn.jsx";
 import { useNavigate } from "react-router-dom";
 import ToggleFormButton from "../components/Login/ToggleFromButton.jsx";
 import useAuth from "../hooks/useAuth.js";
 import { useMutation } from "@tanstack/react-query";
+import { useGoogleLogin } from "@react-oauth/google";
+import google from "../assets/images/png/google.png";
 
 const Login = () => {
   const [isLoginForm, setIsLoginForm] = useState(true);
@@ -18,6 +19,7 @@ const Login = () => {
     setIsAuthenticated,
     setUser,
     registerUser,
+    googleLogin,
   } = useAuth();
 
   const {
@@ -27,13 +29,12 @@ const Login = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      console.log(data.data);
       setIsAuthenticated(true);
       setUser(data.data);
-      localStorage.setItem("isAuthenticated", true);
-      localStorage.setItem("user", JSON.stringify(data.data));
     },
     onError: (error) => {
-      console.log("Error from onError", error.response.data.message);
+      console.log("Error from onError", error);
     },
   });
 
@@ -53,6 +54,17 @@ const Login = () => {
     },
   });
 
+  const { mutate: googleLoginMutation } = useMutation({
+    mutationFn: googleLogin,
+    onSuccess: (data) => {
+      console.log(data.data);
+      setIsAuthenticated(true);
+      setUser(data.data);
+    },
+    onError: (error) => {
+      console.log("Error from google Login", error);
+    },
+  });
   const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
@@ -91,7 +103,13 @@ const Login = () => {
       registerMutation(formState);
     }
   };
-
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
+    googleLoginMutation(accessToken);
+  }
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: handleGoogleLoginSuccess,
+  });
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/home", { replace: true });
@@ -111,8 +129,8 @@ const Login = () => {
             className={`text-[#ef6868] text-sm border-2 border-[#ef6868] pl-4 pr-4 mt-4 pt-1 pb-1 rounded`}
           >
             {loginError
-              ? loginErrorDetails.response.data.message
-              : registerErrorDetails.response.data.message}
+              ? loginErrorDetails?.response?.data?.message
+              : registerErrorDetails?.response?.data?.message}
           </p>
         )}
         {registrationSuccess && (
@@ -164,13 +182,18 @@ const Login = () => {
           >
             {isLoginForm ? "Login" : "Sign Up"}
           </button>
-          <h3 className="mt-2"> or sign up using </h3>
-          <GoogleBtn />
-          <ToggleFormButton
-            isLoginForm={isLoginForm}
-            handleLoginFormToggle={handleLoginFormToggle}
-          />
         </form>
+        <h3 className="mt-2"> or sign up using </h3>
+        <button
+          onClick={() => handleGoogleLogin()}
+          className=" border-[#000000] border-2 rounded-full p-2 w-[45px] h-[45px] mt-2"
+        >
+          <img src={google} alt="google" />
+        </button>
+        <ToggleFormButton
+          isLoginForm={isLoginForm}
+          handleLoginFormToggle={handleLoginFormToggle}
+        />
       </div>
     </div>
   );

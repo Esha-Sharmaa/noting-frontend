@@ -26,7 +26,7 @@ const withPin = (WrappedComopnent) => {
     );
   };
   WithPinComponent.propTypes = {
-    isPinned: PropTypes.bool.isRequired,
+    isPinned: PropTypes.bool,
     onPin: PropTypes.func.isRequired,
     OnUnpin: PropTypes.func.isRequired,
     pinId: PropTypes.string.isRequired,
