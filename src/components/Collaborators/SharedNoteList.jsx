@@ -13,7 +13,6 @@ const SharedNoteList = () => {
   if (isError) return <h1>{error?.message}</h1>;
   if (sharedList?.length === 0)
     return <Empty message={"You have not Createds any notes yet. "} />;
-  if (sharedList) console.log(sharedList[0]);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 md:p-10">

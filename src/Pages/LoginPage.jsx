@@ -29,7 +29,7 @@ const Login = () => {
   } = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log(data.data);
+
       setIsAuthenticated(true);
       setUser(data.data);
     },
@@ -57,7 +57,6 @@ const Login = () => {
   const { mutate: googleLoginMutation } = useMutation({
     mutationFn: googleLogin,
     onSuccess: (data) => {
-      console.log(data.data);
       setIsAuthenticated(true);
       setUser(data.data);
     },
@@ -93,7 +92,6 @@ const Login = () => {
     setValidationErrors({});
     const errors = validateUserData(formState, isLoginForm);
     if (Object.keys(errors)?.length) {
-      console.log("error object", errors);
       setValidationErrors(errors);
       return;
     }

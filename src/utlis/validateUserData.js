@@ -1,7 +1,6 @@
 const validateUserData = ({ fullName, password, email }, isLoginForm) => {
   let errors = {};
   if (!isLoginForm && !fullName) {
-    console.log(fullName.length, isLoginForm);
     errors.fullName = "Full Name is required";
   } else if (!isLoginForm && fullName?.length < 3) {
     errors.fullName = "Full Name must be atleast 3 characters long";
@@ -12,7 +11,6 @@ const validateUserData = ({ fullName, password, email }, isLoginForm) => {
   if (!password) {
     errors.password = "Password is required";
   } else if (password.length < 8) {
-    console.log(password.length);
     errors.password = "Password must be atleast 8 characters";
   } else if (
     !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)

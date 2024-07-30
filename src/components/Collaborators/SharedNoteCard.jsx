@@ -82,7 +82,6 @@ const SharedNoteCard = ({ note, permission }) => {
   };
   const handleSubmit = () => {
     const formData = new FormData();
-    console.log(editableContent);
     formData.append("id", note._id);
     formData.append("title", editableContent.title);
     formData.append("type", note.type);

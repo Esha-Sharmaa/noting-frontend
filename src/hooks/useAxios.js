@@ -17,7 +17,6 @@ const useAxios = () => {
       (response) => response,
       async (error) => {
         const prevRequest = error.config;
-        console.log("In the interceptor trying to refresh token");
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newAccessToken = await refresh();

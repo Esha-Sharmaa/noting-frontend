@@ -20,7 +20,6 @@ export const NotesProvider = ({ children }) => {
     }
   };
   const addNote = async (data) => {
-    console.log(data);
     const response = await axios.post("/api/v1/notes/add", data);
     return response.data;
   };
@@ -30,7 +29,7 @@ export const NotesProvider = ({ children }) => {
   };
   const deleteNote = async (id) => {
     const response = await axios.delete(`/api/v1/notes/delete/${id}`);
-    console.log(response);
+
     return response.data;
   };
   const addCollaborator = async ({ email, noteId, permission }) => {
@@ -60,12 +59,10 @@ export const NotesProvider = ({ children }) => {
   };
   const archiveNote = async (id) => {
     const response = await axios.put(`/api/v1/notes/archive/${id}`);
-    console.log("Response after archiving", response.data);
     return response.data;
   };
   const trashNote = async (id) => {
     const response = await axios.put(`/api/v1/notes/trash/${id}`);
-    console.log("response after trashing the data", response.data);
     return response.data;
   };
   const restoreNote = async (id) => {
@@ -85,8 +82,6 @@ export const NotesProvider = ({ children }) => {
     return response.data;
   };
   const editNote = async (id, data) => {
-    console.log(id, data);
-
     const response = await axios.put(`/api/v1/notes/edit/${id}`, data);
     return response.data;
   };

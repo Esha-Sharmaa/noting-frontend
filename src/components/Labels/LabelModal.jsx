@@ -44,7 +44,6 @@ const LabelModal = ({ isOpen, onClose, noteId }) => {
     },
   });
   const handleAddLabel = ({ labelId, noteId }) => {
-    console.log(labelId, noteId);
     mutation.mutate({ labelId, noteId });
   };
   return (

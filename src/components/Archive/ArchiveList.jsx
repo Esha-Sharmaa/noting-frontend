@@ -22,7 +22,6 @@ const ArchiveList = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 md:p-10">
-        {console.log(filteredNotes)}
         {filteredNotes.map((note) => (
           <NoteCard
             key={note._id}

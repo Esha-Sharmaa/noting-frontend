@@ -40,16 +40,16 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 right-0 left-0 grid grid-cols-5 md:grid-cols-6 border-b-2 px-2 md:px-8 py-[14px] gap-2 md:gap-8 items-center bg-[#303236] z-10">
-      <Link to={"/home"} className="col-span-1 flex items-center gap-4">
+    <div className="fixed top-0 right-0 left-0 flex items-center justify-between border-b-2 px-2 md:px-8 py-[14px] gap-4 md:gap-8 bg-[#303236] z-10">
+      <Link to={"/home"} className="flex items-center">
         <img
           src={logo}
           alt="logo"
           className="w-[6rem] md:w-36 transition-all ease-in-out duration-300"
         />
       </Link>
-      <div className="col-span-3 md:col-span-4 flex items-center gap-4 rounded-md px-4 py-2 shadow-lg bg-darkBackground focus-within:ring-2 focus-within:ring-accentPurple justify-self-center"></div>
-      <div className="col-span-1 justify-self-end bg-[#303236]">
+      <div className="flex-grow"></div>
+      <div className="flex items-center">
         <Menu className="bg-[#303236]">
           <MenuButton
             as={Button}
@@ -70,7 +70,6 @@ const Header = () => {
               Change Avatar
             </MenuItem>
             <MenuDivider />
-
             <MenuItem onClick={handleLogout} bg={"#303236"}>
               Logout
             </MenuItem>

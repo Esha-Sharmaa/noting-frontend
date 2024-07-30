@@ -25,7 +25,6 @@ const NoteCard = ({
   isArchived,
   isTrashed,
 }) => {
-  console.log(type, title,   content, imageUrl, listItems);
   const { showSuccessToast, showErrorToast } = useToastNotification();
   const {
     isOpen: isNoteModalOpen,
@@ -210,7 +209,7 @@ const NoteCard = ({
   };
   const handleSubmit = () => {
     const formData = new FormData();
-    console.log(editableContent);
+    
     formData.append("id", id);
     formData.append("type", type);
     formData.append("title", editableContent.title);
