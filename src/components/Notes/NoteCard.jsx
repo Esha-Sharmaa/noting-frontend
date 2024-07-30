@@ -25,6 +25,7 @@ const NoteCard = ({
   isArchived,
   isTrashed,
 }) => {
+  console.log(type, title,   content, imageUrl, listItems);
   const { showSuccessToast, showErrorToast } = useToastNotification();
   const {
     isOpen: isNoteModalOpen,
@@ -52,6 +53,7 @@ const NoteCard = ({
     imageUrl,
     listItems,
   });
+
   const {
     archiveNote,
     trashNote,

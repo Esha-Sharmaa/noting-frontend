@@ -138,7 +138,7 @@ const NoteFooter = ({
             </AlertDialogHeader>
 
             <AlertDialogBody fontSize={"md"}>
-              Are you sure? This Note will be delete permanently and can't be
+              Are you sure? This Note will be delete permanently and can not be
               restored.
             </AlertDialogBody>
 

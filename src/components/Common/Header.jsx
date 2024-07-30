@@ -1,4 +1,3 @@
-import { FaSearch } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/png/Color logo - no background.png";
 import useAuth from "../../hooks/useAuth";
@@ -19,14 +18,14 @@ import AvatarUploadModal from "./AvatarUploadModal";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, setIsAuthenticated, setUser } = useAuth();
   const { showErrorToast } = useToastNotification();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      localStorage.removeItem("isAuthenticated");
-      localStorage.removeItem("user");
+      setIsAuthenticated(false);
+      setUser(null);
       navigate("/");
     },
     onError: (error) => {
@@ -49,14 +48,7 @@ const Header = () => {
           className="w-[6rem] md:w-36 transition-all ease-in-out duration-300"
         />
       </Link>
-      <div className="col-span-3 md:col-span-4 flex items-center gap-4 rounded-md px-4 py-2 shadow-lg bg-darkBackground focus-within:ring-2 focus-within:ring-accentPurple justify-self-center">
-        <FaSearch className="text-accentPurple" size={25} />
-        <input
-          type="text"
-          placeholder="Search..."
-          className="border-none outline-none bg-darkBackground w-full h-full text-white placeholder-gray-400 focus:ring-0 focus:outline-none font-sans"
-        />
-      </div>
+      <div className="col-span-3 md:col-span-4 flex items-center gap-4 rounded-md px-4 py-2 shadow-lg bg-darkBackground focus-within:ring-2 focus-within:ring-accentPurple justify-self-center"></div>
       <div className="col-span-1 justify-self-end bg-[#303236]">
         <Menu className="bg-[#303236]">
           <MenuButton

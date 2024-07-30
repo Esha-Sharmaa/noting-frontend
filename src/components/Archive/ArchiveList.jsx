@@ -17,15 +17,17 @@ const ArchiveList = () => {
     data?.data?.filter((note) => note.isArchived && !note.isTrashed) || [];
 
   if (filteredNotes?.length === 0)
-    return <Empty message={"You have not archived any notes yet. "}/>
+    return <Empty message={"You have not archived any notes yet. "} />;
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6 md:p-10">
+        {console.log(filteredNotes)}
         {filteredNotes.map((note) => (
           <NoteCard
             key={note._id}
             id={note._id}
+            type={note.type}
             title={note.title}
             content={note.content}
             imageUrl={note.imageUrl}

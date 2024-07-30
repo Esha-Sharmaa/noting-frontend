@@ -23,6 +23,7 @@ const NoteModal = ({
   handleChange,
   handleSubmit,
 }) => {
+  console.log(editableContent);
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
